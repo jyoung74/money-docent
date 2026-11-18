@@ -1,0 +1,297 @@
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#ffffff">
+  <title>머니도슨트 | 은퇴설계</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="script.js" defer></script>
+</head>
+<body>
+
+<header class="topbar">
+  <a class="brand" href="#home">
+    <span class="brand-mark">M</span>
+    <strong>머니도슨트</strong>
+  </a>
+  <div class="top-actions">
+    <a class="guide" href="#guide">이용안내</a>
+    <button class="my-button" type="button">MY</button>
+  </div>
+</header>
+
+<main>
+  <section id="home" class="page-section">
+    <div class="home-hero">
+      <p class="eyebrow">YOUR RETIREMENT PARTNER</p>
+      <h1>평생 벌었는데,<br>평생 쓸 수 있을까?</h1>
+      <p>연금·금융자산·부동산·부채를 함께 살펴보는 은퇴설계</p>
+      <a class="primary-button" href="#diagnosis">은퇴설계 시작하기</a>
+    </div>
+  </section>
+
+  <section id="diagnosis" class="page-section">
+
+    <div class="input-hero">
+      <span class="input-hero-label">RETIREMENT<br>DIAGNOSIS</span>
+      <h1>은퇴설계 입력</h1>
+      <p>현재 상황과 은퇴 후 계획을 입력해 주세요.</p>
+    </div>
+
+    <form id="retirementForm" novalidate>
+
+      <div class="form-card">
+        <h2>01. 기본 정보</h2>
+        <div class="input-grid">
+          <label>현재 나이 (세)
+            <input id="currentAge" type="number" min="20" max="100" value="55" required>
+          </label>
+          <label>은퇴 예정 나이 (세)
+            <input id="retireAge" type="number" min="20" max="105" value="60" required>
+          </label>
+          <label>분석 종료 나이 (세)
+            <input id="endAge" type="number" min="60" max="110" value="100" required>
+          </label>
+          <label>은퇴 후 월 목표 생활비 (만원)
+            <input id="monthlyExpense" type="number" min="1" value="300" required>
+          </label>
+        </div>
+        <p class="hint">모든 자산과 부채는 현재 입력 시점의 금액을 기준으로 계산합니다.</p>
+      </div>
+
+      <div class="form-card">
+        <h2>02. 현재 금융자산과 부채</h2>
+        <div class="input-grid">
+          <label>현재 금융자산 (만원)
+            <input id="financialAssets" type="number" min="0" value="50000">
+          </label>
+          <label>부동산 현재 평가액 (만원)
+            <input id="propertyValue" type="number" min="0" value="100000">
+          </label>
+          <label>주택담보대출 잔액 (만원)
+            <input id="mortgageDebt" type="number" min="0" value="6000">
+          </label>
+          <label>신용대출 잔액 (만원)
+            <input id="creditDebt" type="number" min="0" value="0">
+          </label>
+          <label>기타 부채 (만원)
+            <input id="otherDebt" type="number" min="0" value="0">
+          </label>
+          <label>대출 연이율 (%)
+            <input id="debtRate" type="number" min="0" max="30" step="0.1" value="4">
+          </label>
+          <label>월 대출 상환액 (만원)
+            <input id="monthlyDebtPayment" type="number" min="0" value="0">
+          </label>
+        </div>
+        <p class="hint">
+          은퇴 전 상환액은 근로소득에서 납부한다고 가정합니다.
+          은퇴 후에는 연금과 금융자산에서 생활비 및 대출상환액을 충당합니다.
+        </p>
+      </div>
+
+      <div class="form-card">
+        <h2>03. 연금 수령 계획</h2>
+        <div class="input-grid">
+          <label>국민연금 개시 나이 (세)
+            <input id="nationalStartAge" type="number" min="50" max="110" value="65">
+          </label>
+          <label>국민연금 월 수령액 (만원)
+            <input id="nationalPension" type="number" min="0" value="150">
+          </label>
+          <label>퇴직연금 개시 나이 (세)
+            <input id="retirementPensionStartAge" type="number" min="30" max="110" value="60">
+          </label>
+          <label>퇴직연금 월 수령액 (만원)
+            <input id="retirementPension" type="number" min="0" value="100">
+          </label>
+          <label>개인연금 개시 나이 (세)
+            <input id="privateStartAge" type="number" min="30" max="110" value="60">
+          </label>
+          <label>개인연금 월 수령액 (만원)
+            <input id="privatePension" type="number" min="0" value="50">
+          </label>
+          <label>개인연금 종료 나이 (세)
+            <input id="privateEndAge" type="number" min="30" max="110" value="90">
+          </label>
+        </div>
+        <p class="hint">
+          국민연금은 개시 후 물가상승률을 반영합니다.
+          퇴직연금과 개인연금은 입력한 명목 수령액을 유지합니다.
+        </p>
+      </div>
+
+      <div class="form-card">
+        <h2>04. 부동산 활용 전략</h2>
+
+        <div class="strategy-options">
+          <label><input type="radio" name="propertyStrategy" value="none" checked> 부동산 미활용</label>
+          <label><input type="radio" name="propertyStrategy" value="sell"> 부동산 매각</label>
+          <label><input type="radio" name="propertyStrategy" value="reverse"> 주택연금</label>
+        </div>
+
+        <div id="saleFields" class="input-grid conditional" hidden>
+          <label>매각 예정 금액 (만원)
+            <input id="saleAmount" type="number" min="0" value="100000">
+          </label>
+          <label>매각 비용률 (%)
+            <input id="saleCostRate" type="number" min="0" max="100" step="0.1" value="0">
+          </label>
+        </div>
+
+        <div id="reverseFields" class="input-grid conditional" hidden>
+          <label>주택연금 개시 나이 (세)
+            <input id="reverseStartAge" type="number" min="30" max="110" value="65">
+          </label>
+          <label>주택연금 월 수령액 (만원)
+            <input id="reverseMonthly" type="number" min="0" value="0">
+          </label>
+        </div>
+      </div>
+
+      <div class="form-card">
+        <h2>05. 경제 가정</h2>
+        <div class="input-grid">
+          <label>연간 물가상승률 (%)
+            <input id="inflationRate" type="number" min="0" max="20" step="0.1" value="2">
+          </label>
+          <label>연간 금융자산 수익률 (%)
+            <input id="returnRate" type="number" min="-30" max="30" step="0.1" value="3">
+          </label>
+        </div>
+      </div>
+
+      <button class="primary-button calculate-button" type="submit">
+        은퇴설계 분석하기
+      </button>
+      <p id="formError" class="error-message" role="alert"></p>
+
+    </form>
+  </section>
+
+  <section id="results" class="page-section results-section" hidden>
+
+    <div class="section-heading result-title">
+      <div>
+        <p class="eyebrow">YOUR RETIREMENT REPORT</p>
+        <h1>은퇴설계 분석 결과</h1>
+      </div>
+      <span class="complete-mark">✓</span>
+    </div>
+
+    <div class="summary-grid">
+      <article class="summary-card featured">
+        <h3>은퇴 시점 예상 금융자산</h3>
+        <strong id="retirementAsset">-</strong>
+        <span>만원</span>
+      </article>
+      <article class="summary-card">
+        <h3>은퇴 첫 달 연금소득</h3>
+        <strong id="firstPension">-</strong>
+        <span>만원</span>
+      </article>
+      <article class="summary-card">
+        <h3>은퇴 첫 달 부족 생활비</h3>
+        <strong id="firstGap">-</strong>
+        <span>만원</span>
+      </article>
+      <article class="summary-card">
+        <h3>예상 금융자산 소진 나이</h3>
+        <strong id="depletionAge">미소진</strong>
+        <span id="depletionNote">분석 기간 기준</span>
+      </article>
+    </div>
+
+    <article class="result-card">
+      <h2>현재 기준 자산·부채 현황</h2>
+      <div id="currentPosition" class="milestone-list"></div>
+    </article>
+
+    <article class="result-card">
+      <h2>은퇴자산 흐름</h2>
+      <p class="card-subtitle">연도별 금융자산과 부채 잔액 · 단위: 만원</p>
+      <div class="chart-wrap">
+        <canvas id="assetChart"></canvas>
+      </div>
+    </article>
+
+    <article class="result-card">
+      <h2>월 생활비 부족액과 금융자산 인출</h2>
+      <p class="card-subtitle">
+        연도별 월평균 부족 생활비와 월평균 금융자산 인출액 · 단위: 만원
+      </p>
+      <div class="chart-wrap">
+        <canvas id="cashChart"></canvas>
+      </div>
+    </article>
+
+    <article class="result-card">
+      <h2>주요 시점별 자산</h2>
+      <div id="milestoneList" class="milestone-list"></div>
+    </article>
+
+    <article class="result-card">
+      <h2>은퇴 전후 연금 공백기간 분석</h2>
+      <div id="bridgeAnalysis" class="advice-content"></div>
+    </article>
+
+    <article class="result-card">
+      <h2>전문가 조언</h2>
+      <div id="expertAdvice" class="advice-content"></div>
+    </article>
+
+    <article class="result-card">
+      <h2>연도별 현금흐름</h2>
+      <div class="table-scroll">
+        <table>
+          <thead>
+            <tr>
+              <th>나이</th>
+              <th>생활비</th>
+              <th>연금수입</th>
+              <th>부족액</th>
+              <th>대출상환</th>
+              <th>자산인출</th>
+              <th>매각유입</th>
+              <th>금융자산</th>
+              <th>부채</th>
+            </tr>
+          </thead>
+          <tbody id="cashflowRows"></tbody>
+        </table>
+      </div>
+    </article>
+
+    <p class="disclaimer">
+      본 결과는 입력한 가정에 따른 월별 시뮬레이션입니다.
+      세금, 수수료, 실제 연금 인상률, 대출별 상환조건 및 투자수익 변동은 별도 확인이 필요합니다.
+    </p>
+  </section>
+
+  <section id="guide" class="page-section">
+    <div class="section-heading">
+      <div>
+        <p class="eyebrow">HOW TO USE</p>
+        <h1>이용안내</h1>
+      </div>
+    </div>
+    <article class="result-card">
+      현재 금융자산과 부채를 기준으로 은퇴 전후의 현금흐름을 월 단위로 분석합니다.
+      입력값을 바꾸어 여러 은퇴 시나리오를 비교해 보세요.
+    </article>
+  </section>
+</main>
+
+<nav class="bottom-nav" aria-label="하단 메뉴">
+  <a href="#home"><span class="nav-icon">⌂</span>홈</a>
+  <a href="#diagnosis"><span class="nav-icon">▣</span>은퇴진단</a>
+  <a href="#results"><span class="nav-icon">▤</span>분석결과</a>
+  <a href="#diagnosis"><span class="nav-icon">◎</span>설계도구</a>
+  <a href="#guide"><span class="nav-icon">?</span>이용안내</a>
+</nav>
+
+</body>
+</html>
